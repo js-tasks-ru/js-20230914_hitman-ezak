@@ -15,7 +15,6 @@ export default class NotificationMessage {
 
     this.element = element.firstElementChild;
     NotificationMessage.activeNotification = this.element;
-    this.destroy();
   }
 
   get template() {
@@ -45,6 +44,7 @@ export default class NotificationMessage {
   }
   destroy() {
     this.remove();
-    NotificationMessage.activeNotification = void 0;
+    this.element = null;
+    NotificationMessage.activeNotification = null;
   }
 }
