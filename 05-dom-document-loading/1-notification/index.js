@@ -15,6 +15,7 @@ export default class NotificationMessage {
 
     this.element = element.firstElementChild;
     NotificationMessage.activeNotification = this.element;
+    this.destroy();
   }
 
   get template() {
