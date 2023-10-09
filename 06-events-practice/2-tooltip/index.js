@@ -1,5 +1,6 @@
 class Tooltip {
   static init;
+  correctPointMouseNumber = 15;
 
   constructor() {
     if (Tooltip.init) {
@@ -43,19 +44,16 @@ class Tooltip {
   };
 
   moveTooltip(event) {
-    const left = event.clientX + 15;
-    const top = event.clientY + 15;
+    const left = event.clientX + this.correctPointMouseNumber;
+    const top = event.clientY + this.correctPointMouseNumber;
 
     this.element.style.left = `${left}px`;
     this.element.style.top = `${top}px`;
   }
 
   removeTooltip() {
-    if (this.element) {
-      this.element.remove();
-      this.element = null;
-      document.removeEventListener("pointermove", this.onMouseMove);
-    }
+    this.remove();
+    document.removeEventListener("pointermove", this.onMouseMove);
   }
 
   remove() {
@@ -67,6 +65,7 @@ class Tooltip {
   destroy() {
     this.initMouseEvent();
     this.removeTooltip();
+    this.element = null;
   }
 }
 

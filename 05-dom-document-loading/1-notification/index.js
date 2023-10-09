@@ -14,7 +14,6 @@ export default class NotificationMessage {
     element.innerHTML = template;
 
     this.element = element.firstElementChild;
-    NotificationMessage.activeNotification = this.element;
   }
 
   get template() {
@@ -34,25 +33,21 @@ export default class NotificationMessage {
 
   show(parent = document.body) {
     const { element, duration } = this;
+    if (NotificationMessage.activeNotification) {
+      NotificationMessage.activeNotification.destroy();
+    }
 
+    NotificationMessage.activeNotification = this;
     parent.append(element);
-    this.hide();
+    this.timeOut = setTimeout(() => this.remove(), duration);
   }
 
-  hide = () => {
-    setTimeout(() => {
-      this.remove();
-    }, this.duration);
-  };
-
-  remove = () => {
+  remove() {
     this.element.remove();
-  };
+  }
 
   destroy() {
-    clearTimeout(this.hide);
-    this.remove;
-    this.element = null;
-    NotificationMessage.activeNotification = null;
+    clearTimeout(this.timeOut);
+    this.remove();
   }
 }
