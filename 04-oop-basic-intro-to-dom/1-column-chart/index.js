@@ -91,7 +91,7 @@ export default class ColumnChart {
   }
   destroy() {
     this.remove();
-    this.element = void 0;
+    this.element = null;
     this.subElements = {};
   }
 }
