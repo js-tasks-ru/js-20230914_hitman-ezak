@@ -415,5 +415,4 @@ export default class ProductForm {
     this.remove();
     this.element = null;
     this.subElement = {};
-  }
 }
