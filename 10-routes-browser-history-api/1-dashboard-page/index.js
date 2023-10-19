@@ -17,13 +17,15 @@ export default class Page {
   urlCustomers = "/api/dashboard/customers";
 
   async render() {
+    const fromDate = new Date();
+    const toDate = new Date();
     const element = document.createElement("div");
     element.innerHTML = this.template;
     this.element = element.firstElementChild;
     this.subElements = this.getSubElements(element);
     this.range = {
-      from: new Date(new Date().setMonth(new Date().getMonth() - 1)),
-      to: new Date(),
+      from: new Date(fromDate.setMonth(fromDate.getMonth() - 1)),
+      to: toDate,
     };
 
     this.loadComponents();
@@ -97,6 +99,9 @@ export default class Page {
   }
 
   async updateComponents(from = this.range.from, to = this.range.to) {
+    const fromTimeZone = new Date().getTimezoneOffset();
+    const toTimeZone = new Date().getTimezoneOffset();
+
     this.components.ordersChart.update(from, to);
     this.components.salesChart.update(from, to);
     this.components.customersChart.update(from, to);
@@ -104,15 +109,11 @@ export default class Page {
 
     url.searchParams.set(
       "from",
-      new Date(
-        from.getTime() - new Date().getTimezoneOffset() * 60000
-      ).toISOString()
+      new Date(from.getTime() - fromTimeZone * 60000).toISOString()
     );
     url.searchParams.set(
       "to",
-      new Date(
-        from.getTime() - new Date().getTimezoneOffset() * 60000
-      ).toISOString()
+      new Date(from.getTime() - toTimeZone * 60000).toISOString()
     );
     this.components.sortableTable.addRows(fetchJson(url));
   }
