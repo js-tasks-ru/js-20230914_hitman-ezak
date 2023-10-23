@@ -281,8 +281,6 @@ export default class ProductForm {
       const element = productForm.querySelector(`#${item}`);
 
       element.value = this.formData[item] || this.defaultFormData[item];
-      console.log(this.formData[item]);
-      console.log(this.defaultFormData[item]);
     });
   }
 
